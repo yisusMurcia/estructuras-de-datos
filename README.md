@@ -38,3 +38,15 @@ A more complex dinamyc list, it's usefull for manage data when is important to k
 - addAtIndex(int, T): Add an item in the given index.
 - removeAtIndex(int): Remove the item in the given index, return a boolean indicating if the operation was succesfull.
 - Operator [index]: Access the item in the given index
+
+## Stack
+LIFO (Last in, first out)
+
+- pop(): return the last element added and remove it from the stack.
+- push(t): add the item to the stack
+
+## Queue
+FIFO (First in, first out)
+
+- add(t): add an item to the queue.
+- attend(): return the first item added and removes fron the queue.
