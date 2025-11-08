@@ -15,10 +15,16 @@ class List {
         Node* head;
         Node* tail;
         int size;
+        Node *getNodeAtIndex(int index) {
+            if (index < 0 || index >= size) throw out_of_range("Index out of range");
+            Node* current= head->next;
+                for (int i = 0; i < index; ++i)current = current->next;
+            return current;
+        }
     public:
         List(){
-            head<T> = new Node();
-            tail<T> = new Node();
+            head = new Node();
+            tail= new Node();
             size = 0;
             head->next = tail;
             tail->next = tail;
@@ -34,11 +40,11 @@ class List {
 
         void pushBack(const T& value) {
             Node* newNode = new Node(value);
-            if (head->next == tail) {
+            if (isEmpty()) {
                 head -> next = newNode;
                 tail = newNode;
             } else {
-                Node<T>* temp = head;
+                Node* temp = head;
                 while (temp->next != tail) {
                     temp = temp->next;
                 }
@@ -49,7 +55,7 @@ class List {
         }
 
         bool popBack() {
-            if (head->next= tail) return false;
+            if (isEmpty()) return false;
             Node* current = head;
             while (current->next != tail) {
                 current = current->next;
@@ -75,7 +81,7 @@ class List {
         }
 
         bool popFront() {
-            if (head->next == tail) return false;
+            if (isEmpty()) return false;
             Node* temp = head->next;
             head->next = temp->next;
             delete temp;
@@ -85,17 +91,14 @@ class List {
 
         T operator[](int index) {
             if (index < 0 || index >= size) throw out_of_range("Index out of range");
-            Node* current = head->next;
-            for (int i = 0; i < index; ++i) {
-                current = current->next;
-            }
+            Node* current = getNodeAtIndex(index);
             return current->data;
         }
 
         void addAtIndex(int index, const T& value) {
             if (index < 0 || index > size) throw out_of_range("Index out of range");
             Node* newNode = new Node(value);
-            Node* current = List[index - 1];
+            Node* current = getNodeAtIndex(index - 1); 
             newNode->next = current->next;
             current->next = newNode;
             ++size;
@@ -103,13 +106,10 @@ class List {
 
         bool removeAtIndex(int index) {
             if (index < 0 || index >= size) return false;
-            Node* current = head;
-            for (int i = 0; i < index; ++i) {
-                current = current->next;
-            }
-            Node* temp = current->next;
-            current->next = temp->next;
-            delete temp;
+            Node* beforeNode = getNodeAtIndex(index - 1);
+            Node* nodeToDelete = beforeNode->next;
+            beforeNode->next = nodeToDelete->next;
+            delete nodeToDelete;
             --size;
             return true;
         }
