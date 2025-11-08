@@ -12,7 +12,9 @@ A simple dinamyc list, it uses a template (T) for have more versatility, here ar
 - isEmpty()
 - pushFront(T): Add an item at the front of the list.
 - popFront(): Delete the first item ind the list, and return if the operation was succesfull.
-:warning: The next methods are not efficient as the methods displayed above,
+
+⚠️The next methods are not efficient as the methods displayed above.
+
 - addAtIndex(int, T): Add an item in the given index.
 - removeAtIndex(int): Remove the item in the given index, return a boolean indicating if the operation was succesfull.
 - Operator [index]: Access the item in the given index
