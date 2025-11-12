@@ -50,3 +50,9 @@ FIFO (First in, first out)
 
 - add(t): add an item to the queue.
 - attend(): return the first item added and removes fron the queue.
+
+## OrderList
+Create a list were the items are order (you can change the order in the add function)
+
+- add(t) Insert an item in the given position
+- remove(t) Look for the item in the list, if it appears in the list it deletes, return a boolean indicating the success of the operation
