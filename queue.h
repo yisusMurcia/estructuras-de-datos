@@ -26,13 +26,13 @@ class Queue {
             size = 0;
         }
         ~Queue() {
-            while (!empty()) {
+            while (!isEmpty()) {
                 attend();
             }
             delete head;
             delete tail;
         }
-        bool empty() const {
+        bool isEmpty() const {
             return size == 0;
         }
 
@@ -47,7 +47,7 @@ class Queue {
         }
 
         void attend(){
-            if (empty()) {
+            if (isEmpty()) {
                 throw std::out_of_range("Queue empty");
             }
             Node* toDelete = head->next;

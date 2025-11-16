@@ -44,15 +44,31 @@ LIFO (Last in, first out)
 
 - pop(): return the last element added and remove it from the stack.
 - push(t): add the item to the stack
+- isEmpty(): You know what it returns
 
 ## Queue
 FIFO (First in, first out)
 
 - add(t): add an item to the queue.
 - attend(): return the first item added and removes fron the queue.
+- isEmpty(): You know what it returns
 
 ## OrderList
 Create a list were the items are order (you can change the order in the add function)
 
 - add(t) Insert an item in the given position
-- remove(t) Look for the item in the list, if it appears in the list it deletes, return a boolean indicating the success of the operation
+- remove(t) Look for the item in the list, if it appears in the list it´s deleted, return a boolean indicating the success of the operation
+
+## Ordered binary tree
+
+Creat an ordered tree optimizated for search, also it´s represented as an array, so take in count it has a limit.
+- add(t): Insert an item
+- remove(t): Look for the item in the tree, if it appears in,  it´s deleted, return a boolean indicating the success of the operation.
+
+### Display data methods:
+- displayByLevels()
+- displayPostOrder()
+- displayPreOrder()
+- displayInOrder()
+
+It also uses a stack and queue, so make sure to added when you'll use it. 
