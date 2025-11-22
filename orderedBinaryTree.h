@@ -16,6 +16,7 @@ class OrderTree{
         int leftChild;
         int rightChild;
         Node(const T &value) : data(value), leftChild(0), rightChild(0){};
+        Node() : data(NULL), leftChild(0), rightChild(0){};
     };
 
     Node** arr;
