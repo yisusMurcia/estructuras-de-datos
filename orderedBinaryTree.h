@@ -27,7 +27,7 @@ class OrderTree{
         this.size = size;
         arr = new Node*[size + 1];//0 is for control
         for(int i = 0; i < size; i++){
-            Node* node = new Node();
+            Node* node = new Node(NULL);
             node->rightChild = i+1;  
             arr[i] = node;          
         }
@@ -56,18 +56,17 @@ class OrderTree{
         if(!head->leftChild){//No hay raiz
             head-> leftChild = indexFree;
         }else{
-            Node* child = arr[head->leftChild];
-            Node* father = child;
-            bool added = false;
-            do{
-                father = child;
-                child = value>father->data? father->rightChild: father->leftChild;
-
-            }while(!added && child != NULL);
-            if(father-> data < value)
-                father->rightChild = indexFree;
+            int current = head->leftChild;
+            int parent = 0;
+            
+            while (current != 0) {
+                parent = current;
+                current = arr[value > arr[current]->data?arr[current]->rightChild:arr[current]->leftChild];
+            }
+            if (value > arr[parent]->data)
+                arr[parent]->rightChild = indexFree;
             else
-                father->leftChild = indexFree;
+                arr[parent]->leftChild = indexFree;
         };
     };
 

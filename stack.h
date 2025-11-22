@@ -21,18 +21,22 @@ class Stack{
 }
 
 void push (t v){Node *temp=new Node;
- temp->data = v;  temp->next=head->next;
-head->next=temp;
-size++;
+    temp->data = v;  temp->next=head->next;
+    head->next=temp;
+    size++;
 }
     t pop(){
-    t x;
-    Node *temp = head->next;
-    head->next = temp->next; x=temp->data;
-    delete temp;
-    size--;
-    return x;
-}
+        t x;
+        Node *temp = head->next;
+        head->next = temp->next; x=temp->data;
+        delete temp;
+        size--;
+        return x;
+    }
+
+    void emptyStack(){
+        while(!isEmpty) pop();
+    }
     bool isEmpty(){return size == 0;}
     int getSize(){return size;}
  };
