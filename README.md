@@ -45,6 +45,8 @@ LIFO (Last in, first out)
 - pop(): return the last element added and remove it from the stack.
 - push(t): add the item to the stack
 - isEmpty(): You know what it returns
+- peek(): return the last item added without remove it.
+- emptyStack()
 
 ## Queue
 FIFO (First in, first out)

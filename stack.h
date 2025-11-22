@@ -25,10 +25,17 @@ void push (t v){Node *temp=new Node;
     head->next=temp;
     size++;
 }
+    t peek(){
+        t x;
+        Node *temp = head->next;
+        head->next = temp->next;
+        x=temp->data;
+    }
     t pop(){
         t x;
         Node *temp = head->next;
-        head->next = temp->next; x=temp->data;
+        head->next = temp->next;
+        x=temp->data;
         delete temp;
         size--;
         return x;
