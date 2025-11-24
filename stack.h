@@ -1,50 +1,42 @@
 #ifndef STACK_H
-#define STACK_K
+#define STACK_H
 
-template <class t> 
+#include <stdexcept>
+
+template <class T>
 class Stack{
-    private:
-    struct Node{t data; Node *next;};
-    Node *head, *tail;
+private:
+    struct Node{ T data; Node *next; };
+    Node *head;
     int size;
-    public:
-    Stack (){
-        head = new Node;
-        tail=new Node;
-        size = 0;
-        head->next=tail; tail->next =tail;
-    }
+public:
+    Stack () : head(nullptr), size(0) {}
     ~Stack(){
-    struct Node *temp= head;
-    while (temp!=tail){head=temp;  temp= temp->next;  delete head;}
-    delete tail;
-}
-
-void push (t v){Node *temp=new Node;
-    temp->data = v;  temp->next=head->next;
-    head->next=temp;
-    size++;
-}
-    t peek(){
-        t x;
-        Node *temp = head->next;
-        head->next = temp->next;
-        x=temp->data;
+        while(head){ Node *tmp = head; head = head->next; delete tmp; }
     }
-    t pop(){
-        t x;
-        Node *temp = head->next;
-        head->next = temp->next;
-        x=temp->data;
-        delete temp;
+
+    void push(const T &v){ Node *tmp = new Node{v, head}; head = tmp; size++; }
+
+    T peek() const{
+        if(!head) throw std::out_of_range("Stack is empty");
+        return head->data;
+    }
+
+    T pop(){
+        if(!head) throw std::out_of_range("Stack is empty");
+        Node *tmp = head;
+        T val = tmp->data;
+        head = head->next;
+        delete tmp;
         size--;
-        return x;
+        return val;
     }
 
-    void emptyStack(){
-        while(!isEmpty) pop();
-    }
-    bool isEmpty(){return size == 0;}
-    int getSize(){return size;}
- };
+    void emptyStack(){ while(!isEmpty()) pop(); }
+
+    bool isEmpty() const { return size == 0; }
+
+    int getSize() const { return size; }
+};
+
 #endif
