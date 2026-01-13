@@ -73,4 +73,10 @@ Creat an ordered tree optimizated for search, also it´s represented as an array
 - displayPreOrder()
 - displayInOrder()
 
-It also uses a stack and queue, so make sure to added when you'll use it. 
+It also uses a stack and queue, so make sure to added when you'll use it.
+
+## Sorting algorithms
+In this library you can find some of the most efficients sorting algorithms, these algorithms take an array (or any other data struct if the  operator [] is defined) and modify this structure, don´t return a new one.
+
+- QuickSort: One of the most efficients sorting algorithms, this implementation doesn't use recursion, it uses a stack.
+- MergSort: Useful when you work with a semi-ordered array or when the structure may have the worst case posible.
