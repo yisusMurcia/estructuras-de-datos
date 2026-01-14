@@ -101,4 +101,35 @@ void mergeSort(T arr[], int size) {
 
     delete[] buffer;
 }
+
+template <class T>
+void insertion(T arr[], int size){
+    int i, j;
+    T value;
+    for(i = 1; i < size; i++){
+        j = i;
+        value = arr[j];
+        while(arr[j -1] > value && j > 0){
+            arr[j--] = arr[j - 1];
+        }
+        arr[j] = value;
+    }
+}
+
+template <class T>
+void shellSort(T arr[], int size){
+    int i, j, h;
+    T value;
+    for(h = 1; h< size/9; h = 3*h+1);
+    for(;h>0; h/=3)
+        for(i = h; i < size; i++){
+            value = arr[i];
+            j = i;
+            while(j >= h && arr[j-h] > value){
+                arr[j] = arr[j - h];
+                j-= h;
+            }
+            arr[j] = value;
+        }
+}
 #endif

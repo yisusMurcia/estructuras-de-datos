@@ -80,3 +80,5 @@ In this library you can find some of the most efficients sorting algorithms, the
 
 - QuickSort: One of the most efficients sorting algorithms, this implementation doesn't use recursion, it uses a stack.
 - MergSort: Useful when you work with a semi-ordered array or when the structure may have the worst case posible.
+- Insertion: Useful when the list is almost in order or when the length is less than 32.
+- Shell sort: Useful when the data number is medium, between 20 and 5000.
