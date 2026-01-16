@@ -26,7 +26,6 @@ class Tree{
 
     public:
     Tree(){
-        size++;
         head = nullptr;
     }
 
@@ -39,7 +38,7 @@ class Tree{
         destroyNode(head);
     }
 
-    int size(){return size;}
+    int getSize(){return size;}
 
     void add(T value){
         Node* newNode = new Node(value);
@@ -153,7 +152,7 @@ class Tree{
         Node* temp;
         pendingNodes.push(head);
 
-        while(nodesVisited < size && !pendingNodes.empty()){
+        while(nodesVisited < size && !pendingNodes.isEmpty()){
             temp = pendingNodes.pop();
             values[nodesVisited++] = temp->value;
 

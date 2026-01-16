@@ -27,7 +27,6 @@ class AVLTree{
 
     public:
     AVLTree(){
-        size++;
         head = nullptr;
         head->father = head;
     }
@@ -42,7 +41,7 @@ class AVLTree{
         destroyNode(head);
     }
 
-    int size(){return size;}
+    int getSize(){return size;}
 
     void add(T value){
         Node* newNode = new Node(value);
@@ -157,7 +156,7 @@ class AVLTree{
         Node* temp;
         pendingNodes.push(head);
 
-        while(nodesVisited < size && !pendingNodes.empty()){
+        while(nodesVisited < size && !pendingNodes.isEmpty()){
             temp = pendingNodes.pop();
             values[nodesVisited++] = temp->value;
 
