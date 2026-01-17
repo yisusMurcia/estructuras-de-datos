@@ -13,7 +13,7 @@ class Tree{
         Node(const T &val): value(val), leftChild(nullptr), rightChild(nullptr){}
     };
 
-    Node *head;
+    Node *root;
     int size;
 
     void destroyNode(Node *node){
@@ -26,26 +26,26 @@ class Tree{
 
     public:
     Tree(){
-        head = nullptr;
+        root = nullptr;
     }
 
     Tree(T value){
-        head = new Node(value);
+        root = new Node(value);
         size++;
     }
 
     ~Tree(){
-        destroyNode(head);
+        destroyNode(root);
     }
 
     int getSize(){return size;}
 
     void add(T value){
         Node* newNode = new Node(value);
-        if(!head) head= newNode;
+        if(!root) root= newNode;
         else{
             Node *father, *node;
-            father = head;
+            father = root;
             do{
                 node = value < father->value? father->leftChild: father->rightChild;
                 if(node) father = node;
@@ -60,7 +60,7 @@ class Tree{
     }
 
     bool remove(T value){
-        Node* temp = head;
+        Node* temp = root;
         Node* fatherNode;
         while(temp && temp->value != value){
             fatherNode = temp;
@@ -101,12 +101,12 @@ class Tree{
     }
 
     T* getTreeInorden(){
-        if (!head || size == 0) return nullptr;
+        if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;
         Stack<Node*> pendingNodes;
 
-        Node* temp = head;
+        Node* temp = root;
 
         while(nodesVisited < size){
             while(temp){
@@ -124,13 +124,13 @@ class Tree{
     }
 
     T* getTreePostOrden(){
-        if (!head || size == 0) return nullptr;
+        if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;
         Stack<Node*> pendingNodes;
 
         Node* temp;
-        pendingNodes.push(head);
+        pendingNodes.push(root);
 
         while(nodesVisited < size){
             temp = pendingNodes.pop();
@@ -144,13 +144,13 @@ class Tree{
     }
 
     T* getTreePreorden(){
-        if (!head || size == 0) return nullptr;
+        if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;
         Stack<Node*> pendingNodes;
 
         Node* temp;
-        pendingNodes.push(head);
+        pendingNodes.push(root);
 
         while(nodesVisited < size && !pendingNodes.isEmpty()){
             temp = pendingNodes.pop();

@@ -2,7 +2,7 @@
 
 In this repo you´ll find some useful data structures, here are the structures and methods implemented:
 
-## List
+# List
 
 A simple dinamyc list, it uses a template (T) for have more versatility, here are the allowed methods:
 - Empty constructor and a destructor.
@@ -22,7 +22,7 @@ A simple dinamyc list, it uses a template (T) for have more versatility, here ar
 - removeAtIndex(int): Remove the item in the given index, return a boolean indicating if the operation was succesfull.
 - Operator [index]: Access the item in the given index
 
-## DoubleLinkList
+# DoubleLinkList
 A more complex dinamyc list, it's usefull for manage data when is important to know the item bofore other, here are the methods:
 
 - Empty constructor and a destructor.
@@ -39,7 +39,7 @@ A more complex dinamyc list, it's usefull for manage data when is important to k
 - removeAtIndex(int): Remove the item in the given index, return a boolean indicating if the operation was succesfull.
 - Operator [index]: Access the item in the given index
 
-## Stack
+# Stack
 LIFO (Last in, first out)
 
 - pop(): return the last element added and remove it from the stack.
@@ -48,34 +48,36 @@ LIFO (Last in, first out)
 - peek(): return the last item added without remove it.
 - emptyStack()
 
-## Queue
+# Queue
 FIFO (First in, first out)
 
 - add(t): add an item to the queue.
 - attend(): return the first item added and removes fron the queue.
 - isEmpty(): You know what it returns
 
-## OrderList
+# OrderList
 Create a list were the items are order (you can change the order in the add function)
 
 - add(t) Insert an item in the given position
 - remove(t) Look for the item in the list, if it appears in the list it´s deleted, return a boolean indicating the success of the operation
 
-## Ordered binary tree
+# Tree
+Binary trees implementations with the following methos
 
-Creat an ordered tree optimizated for search, also it´s represented as an array, so take in count it has a limit.
 - add(t): Insert an item
 - remove(t): Look for the item in the tree, if it appears in,  it´s deleted, return a boolean indicating the success of the operation.
+- getSize()
 
-### Display data methods:
-- displayByLevels()
-- displayPostOrder()
-- displayPreOrder()
-- displayInOrder()
+Also these has their own methos for display the items:
+- Inorder
+- Posorder
+- Preorder
+This methods work with a stack, so make sure you included in the program
+## Dinamic implementations
+ - Binary tree: The classic one, use it when you have all the data in order.
+ _ AVL tree: Use it when you´re working with searches, and you don´t need to add or remove more frecuently.
 
-It also uses a stack and queue, so make sure to added when you'll use it.
-
-## Sorting algorithms
+# Sorting algorithms
 In this library you can find some of the most efficients sorting algorithms, these algorithms take an array (or any other data struct if the  operator [] is defined) and modify this structure, don´t return a new one.
 
 - QuickSort: One of the most efficients sorting algorithms, this implementation doesn't use recursion, it uses a stack.
