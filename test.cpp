@@ -1,183 +1,55 @@
-
 #include <iostream>
-#include "AVLTree.h"
+#include "arrayTrees/binaryTree.h"
 
 using namespace std;
 
 int main() {
 
-    AVLTree<int> tree;
-    int* arr;
+    Tree<int> tree;
 
-    // ===============================
-    // INSERCIONES
-    // ===============================
+    // =========================
+    // PRUEBA DE INSERCIÓN
+    // =========================
+    int values[] = {10, 20, 30, 15, 25, 5, 1, 8};
+    int n = sizeof(values) / sizeof(values[0]);
 
-    tree.add(30);
-    tree.add(20);
-    tree.add(40);
-    tree.add(10);
-    tree.add(25);
-    tree.add(35);
+    cout << "Insertando valores:\n";
+    for(int i = 0; i < n; i++){
+        cout << values[i] << " ";
+        tree.add(values[i]);
+    }
+    cout << "\n\n";
+
+    // =========================
+    // RECORRIDOS
+    // =========================
+    tree.displayInOrder();
+    tree.displayPreOrder();
+    tree.displayPostOrder();
+
+    // =========================
+    // PRUEBA DE ELIMINACIÓN
+    // =========================
+    int toRemove[] = {1, 20, 10};
+    int r = sizeof(toRemove) / sizeof(toRemove[0]);
+
+    for(int i = 0; i < r; i++){
+        cout << "Eliminando: " << toRemove[i] << endl;
+        tree.remove(toRemove[i]);
+
+        tree.displayInOrder();
+        cout << "\n\n";
+    }
+
+    // =========================
+    // PRUEBA FINAL
+    // =========================
+    cout << "Inserciones finales:\n";
     tree.add(50);
+    tree.add(60);
+    tree.add(55);
 
-    /*
-        Árbol esperado (balanceado):
-
-                30
-              /    \
-            20      40
-           /  \    /  \
-         10   25  35   50
-
-        InOrder esperado:
-        10 20 25 30 35 40 50
-    */
-
-    cout << "InOrder inicial: ";
-    arr = tree.getTreeInorden();
-    for(int i = 0; i < tree.getSize(); i++){
-        cout << arr[i] << ", ";
-    }
-    cout << endl;
-
-
-    // ===============================
-    // ELIMINAR HOJA
-    // ===============================
-
-    tree.remove(10);
-
-    /*
-        Eliminar hoja 10
-
-                30
-              /    \
-            20      40
-              \    /  \
-              25  35   50
-
-        No requiere rotación
-        InOrder esperado:
-        20 25 30 35 40 50
-    */
-
-    cout << "Después de eliminar 10: ";
-    arr = tree.getTreeInorden();
-    for(int i = 0; i < tree.getSize(); i++){
-        cout << arr[i] << ", ";
-    }
-    cout << endl;
-
-
-    // ===============================
-    // ELIMINAR NODO CON UN HIJO
-    // ===============================
-
-    tree.remove(20);
-
-    /*
-        20 tiene solo hijo derecho (25)
-
-                30
-              /    \
-            25      40
-                   /  \
-                 35   50
-
-        No requiere rotación
-        InOrder esperado:
-        25 30 35 40 50
-    */
-
-    cout << "Después de eliminar 20: ";
-    arr = tree.getTreeInorden();
-    for(int i = 0; i < tree.getSize(); i++){
-        cout << arr[i] << ", ";
-    }
-    cout << endl;
-
-
-    // ===============================
-    // ELIMINAR NODO CON DOS HIJOS
-    // ===============================
-
-    tree.remove(40);
-
-    /*
-        40 tiene dos hijos (35 y 50)
-        Se reemplaza por sucesor inorder (50)
-
-                30
-              /    \
-            25      50
-                   /
-                 35
-
-        Puede requerir balanceo
-        InOrder esperado:
-        25 30 35 50
-    */
-
-    cout << "Después de eliminar 40: ";
-    arr = tree.getTreeInorden();
-    for(int i = 0; i < tree.getSize(); i++){
-        cout << arr[i] << ", ";
-    }
-    cout << endl;
-
-
-    // ===============================
-    // ELIMINAR PARA FORZAR ROTACIÓN
-    // ===============================
-
-    tree.remove(50);
-
-    /*
-        Eliminar 50 provoca desbalance:
-
-            30
-           /
-         25
-           \
-           35   (dependiendo de rotaciones previas)
-
-        Se debe aplicar rotación
-        Árbol balanceado esperado
-
-        InOrder esperado:
-        25 30 35
-    */
-
-    cout << "Después de eliminar 50: ";
-    arr = tree.getTreeInorden();
-    for(int i = 0; i < tree.getSize(); i++){
-        cout << arr[i] << ", ";
-    }
-    cout << endl;
-
-
-    // ===============================
-    // ELIMINAR RAÍZ
-    // ===============================
-
-    tree.remove(30);
-
-    /*
-        Eliminar raíz
-
-        Árbol final balanceado
-        InOrder esperado:
-        25 35
-    */
-
-    cout << "Después de eliminar 30: ";
-    arr = tree.getTreeInorden();
-    for(int i = 0; i < tree.getSize(); i++){
-        cout << arr[i] << ", ";
-    }
-    cout << endl;
-
+    tree.displayInOrder();
 
     return 0;
 }

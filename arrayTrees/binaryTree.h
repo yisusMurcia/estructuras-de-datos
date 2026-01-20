@@ -3,20 +3,21 @@
 
 #include <stdexcept>
 #include <iostream>
-#include "stack.h"
-#include "queue.h"
+#include "../stack.h"
+#include "../queue.h"
+
 using namespace std;
 
 template <class T>
 
-class OrderTree{
+class Tree{
     private:
     struct Node{
         T data;
         int leftChild;
         int rightChild;
         Node(const T &value) : data(value), leftChild(0), rightChild(0){};
-        Node() : data(NULL), leftChild(0), rightChild(0){};
+        Node() : leftChild(0), rightChild(0){};
     };
 
     Node** arr;
@@ -24,11 +25,11 @@ class OrderTree{
     Node* head;
 
     public:
-    OrderTree(int size = 50){
-        this.size = size;
+    Tree(int lenght = 50){
+        size = lenght;
         arr = new Node*[size + 1];//0 is for control
         for(int i = 0; i < size; i++){
-            Node* node = new Node(NULL);
+            Node* node = new Node();
             node->rightChild = i+1;  
             arr[i] = node;          
         }
@@ -36,7 +37,7 @@ class OrderTree{
         arr[size +1] = new Node();
         arr[size +1]->rightChild = 0;
     }
-    ~OrderTree(){
+    ~Tree(){
         for(int i = 0; i<= size; i++){
             Node* node = arr[i];
             delete node;
@@ -62,7 +63,7 @@ class OrderTree{
             
             while (current != 0) {
                 parent = current;
-                current = arr[value > arr[current]->data?arr[current]->rightChild:arr[current]->leftChild];
+                current = value > arr[current]->data? arr[current]->rightChild : arr[current]->leftChild;
             }
             if (value > arr[parent]->data)
                 arr[parent]->rightChild = indexFree;
@@ -73,12 +74,12 @@ class OrderTree{
 
     bool remove(T value){
         bool finded = false;
-        int index = 1;
-        int fatherIndex = 1;
+        int index = head->leftChild;
+        int fatherIndex = 0;
         do{
-            if(arr[index]->data == value){
+            if(arr[index]->data == value)
                 finded = true;
-            }else{
+            else{
                 fatherIndex = index;
                 index = arr[index]->data < value? arr[index]->rightChild : arr[index] ->leftChild;
             }
@@ -90,31 +91,61 @@ class OrderTree{
         int childNode = index;
 
         if(childNodes == 0){//Leaf
-            childNode = 0; //A leaf has no children
-        }else if(childNodes == 1){
-            childNode = toDelete->leftChild == 0? toDelete->leftChild: toDelete->rightChild;
-            toDelete ->leftChild = 0;
-            toDelete->rightChild = head->rightChild;
-            head->rightChild = index;
-            if(arr[fatherIndex]->leftChild == index)
-                arr[fatherIndex]->leftChild = childNode;
+            if(fatherIndex == 0)//Es la raíz
+                head->leftChild = 0;
             else
-                arr[fatherIndex]->rightChild = childNode;
-        }else{
-            int childIndex = toDelete->rightChild;
-            while(toDelete->leftChild == 0){
-                toDelete = arr[childIndex];
-                childIndex = toDelete->leftChild;
+                if(arr[fatherIndex]->leftChild == index)
+                    arr[fatherIndex]->leftChild = 0;
+                else
+                    arr[fatherIndex]->rightChild = 0;
+            
+        }else if(childNodes == 1){//One child
+            childNode = toDelete->leftChild == 0? toDelete->rightChild : toDelete->leftChild;
+            if(fatherIndex == 0){//Es la raíz
+                head->leftChild = childNode;
+            }else{
+                if(arr[fatherIndex]->leftChild == index)
+                    arr[fatherIndex]->leftChild = childNode;
+                else
+                    arr[fatherIndex]->rightChild = childNode;
             }
+        }else{//Two children
+            // Encontrar el sucesor (nodo más a la izquierda del subárbol derecho)
+            int successor = arr[index]->rightChild;
+            int successorFather = index;
+            
+            while(arr[successor]->leftChild != 0){
+                successorFather = successor;
+                successor = arr[successor]->leftChild;
+            }
+
+            // Desconectar el sucesor de su ubicación anterior
+            if(successorFather == index){
+                // El sucesor es el hijo derecho directo
+                arr[index]->rightChild = arr[successor]->rightChild;
+            }else{
+                // El sucesor está en el subárbol izquierdo del hijo derecho
+                arr[successorFather]->leftChild = arr[successor]->rightChild;
+            }
+
+            // Reemplazar el nodo a eliminar con el sucesor
+            arr[successor]->leftChild = arr[index]->leftChild;
+            arr[successor]->rightChild = arr[index]->rightChild;
+            
+            if(fatherIndex == 0){//Es la raíz
+                head->leftChild = successor;
+            }else{
+                if(arr[fatherIndex]->leftChild == index)
+                    arr[fatherIndex]->leftChild = successor;
+                else
+                    arr[fatherIndex]->rightChild = successor;
+            }
+
         }
-        //Update fatherNode and 
-        if(arr[fatherIndex]->leftChild == index)
-                arr[fatherIndex]->leftChild = childNode;
-            else
-                arr[fatherIndex]->rightChild = childNode;
-        toDelete -> leftChild = 0;
-        toDelete -> rightChild = head->rightChild;
+
+        arr[index]->rightChild = head->rightChild;
         head->rightChild = index;
+        
         return true;
     }
 
@@ -137,6 +168,8 @@ class OrderTree{
             // 3. Ahora explorar el subárbol derecho
             current = arr[current]->rightChild;
         }
+
+        cout << endl;
     }
 
     void displayPreOrder() {
@@ -158,6 +191,7 @@ class OrderTree{
             if (arr[index]->leftChild != 0)
                 stack.push(arr[index]->leftChild);
         }
+        cout << endl;
     }
 
     void displayPostOrder() {
@@ -183,6 +217,8 @@ class OrderTree{
         while (!stack2.isEmpty()) {
             cout << arr[stack2.pop()]->data << " ";
         }
+
+        cout << endl;
     }
 
     void displayByLevels() {
@@ -203,6 +239,7 @@ class OrderTree{
             if (arr[idx]->rightChild != 0)
                 queue.add(arr[idx]->rightChild);
         }
+        cout << endl;
     }
 };
 

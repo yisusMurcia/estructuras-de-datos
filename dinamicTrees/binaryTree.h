@@ -100,7 +100,7 @@ class Tree{
         return true;
     }
 
-    T* getTreeInorden(){
+    T* getTreeInorder(){
         if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;
@@ -143,7 +143,7 @@ class Tree{
         return values;
     }
 
-    T* getTreePreorden(){
+    T* getTreePreorder(){
         if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;

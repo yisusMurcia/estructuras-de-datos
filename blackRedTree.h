@@ -8,7 +8,7 @@
 using namespace std;
 
 template <class T>
-class BlackRedTree{
+class RedBlackTree{
     private:
     struct Node{
         T data;
@@ -21,7 +21,6 @@ class BlackRedTree{
     Node** arr;
     int size;
     Node *head;
-    Stack<int> fathersStack;
 
     void leftRotation(int xIndex, int parentIndex) {
         Node* x = arr[xIndex];
@@ -79,7 +78,7 @@ class BlackRedTree{
 
 
     public:
-    BlackRedTree(int size = 50){
+    RedBlackTree(int size = 50){
         this->size = size;
         arr = new Node*[size + 1]; // 0 is control
         for(int i = 0; i <= size; i++){
@@ -92,13 +91,12 @@ class BlackRedTree{
         head->leftChild = 0; // root is empty
         head->isRed = false; // control/nil is black
     }
-    ~BlackRedTree(){
+    ~RedBlackTree(){
         for(int i = 0; i<= size; i++) delete arr[i];
         delete [] arr;
     }
 
     void add(T value){
-        fathersStack.emptyStack();
 
         int childIndex = head->rightChild;
         if(childIndex == 0) throw out_of_range("The tree is full");
@@ -113,7 +111,6 @@ class BlackRedTree{
         if(head->leftChild == 0){ // No root
             head->leftChild = childIndex;
             newNode->isRed = false; // root is black
-            return;
         } else {
             int cur = head->leftChild;
             int parent = 0;
@@ -129,8 +126,7 @@ class BlackRedTree{
             else
                 arr[parent]->leftChild = childIndex;
 
-            // basic balancing omitted here (kept minimal); ensure root is black
-            arr[head->leftChild]->isRed = false;
+            
         }
 
     }

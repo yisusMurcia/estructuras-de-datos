@@ -59,23 +59,26 @@ FIFO (First in, first out)
 Create a list were the items are order (you can change the order in the add function)
 
 - add(t) Insert an item in the given position
-- remove(t) Look for the item in the list, if it appears in the list it´s deleted, return a boolean indicating the success of the operation
+- remove(t) Look for the item in the list, if it appears in the list it's deleted, return a boolean indicating the success of the operation
 
 # Tree
-Binary trees implementations with the following methos
+Binary trees implementations with the following methods
 
 - add(t): Insert an item
-- remove(t): Look for the item in the tree, if it appears in,  it´s deleted, return a boolean indicating the success of the operation.
+- remove(t): Look for the item in the tree, if it appears in,  it's deleted, return a boolean indicating the success of the operation.
 - getSize()
 
-Also these has their own methos for display the items:
+Also these has their own methos for display/get the items in the next order:
 - Inorder
 - Posorder
 - Preorder
 This methods work with a stack, so make sure you included in the program
 ## Dinamic implementations
+This implemententions simulate a real binary tree with the correspondient atributtes,
+
  - Binary tree: The classic one, use it when you have all the data in order.
- _ AVL tree: Use it when you´re working with searches, and you don´t need to add or remove more frecuently.
+ - AVL tree: Use it when you´re working with searches, and you don't need to add or remove more frecuently.
+ - Red black tree: Optimizated in cases where the tree add and removes nodes frecuently, this kind of tree balance the tree less often than the AVL implementation but the searcho complexity still very efficient.
 
 # Sorting algorithms
 In this library you can find some of the most efficients sorting algorithms, these algorithms take an array (or any other data struct if the  operator [] is defined) and modify this structure, don´t return a new one.

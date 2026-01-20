@@ -212,7 +212,7 @@ class AVLTree{
         return values;
     }
 
-    T* getTreePostOrden(){
+    T* getTreePosOrden(){
         if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;
@@ -232,7 +232,7 @@ class AVLTree{
         return values;
     }
 
-    T* getTreePreorden(){
+    T* getTreePreorder(){
         if (!root || size == 0) return nullptr;
         T* values = new T[size];
         int nodesVisited = 0;
