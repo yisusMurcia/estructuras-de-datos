@@ -108,7 +108,6 @@ class AVLTree{
             int current = head->leftChild;
             Stack<int> fatherStack;
             int parent, balanceFactor;
-            bool balanced = false;
 
             fatherStack.push(0);            
             while (current != 0) {
@@ -126,11 +125,10 @@ class AVLTree{
             else
                 arr[parent]->leftChild = index;
 
-            while(!balanced && !fatherStack.isEmpty()){
+            while(!fatherStack.isEmpty()){
                 index = parent;
                 parent = fatherStack.pop();
                 
-                balanced = true;
                 updateHeight(index);
                 balanceFactor = getBalanceFactor(arr[index]);
 
@@ -140,8 +138,6 @@ class AVLTree{
                 }else if(balanceFactor > 1){
                     if(getBalanceFactor(arr[index]->rightChild)< 0) rightRotation(arr[index]->rightChild, index);
                     leftRotation(index, parent);
-                }else{
-                    balanced = false;
                 }
             }
             
