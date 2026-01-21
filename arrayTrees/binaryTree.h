@@ -87,7 +87,8 @@ class Tree{
         }while (!finded);
 
         Node* toDelete = arr[index];
-        int childNodes = toDelete->rightChild + toDelete->leftChild;
+        int childNodes =(toDelete->leftChild != 0) + (toDelete->rightChild != 0);
+
         int childNode = index;
 
         if(childNodes == 0){//Leaf

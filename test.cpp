@@ -1,11 +1,11 @@
 #include <iostream>
-#include "arrayTrees/binaryTree.h"
+#include "arrayTrees/AVLTree.h"
 
 using namespace std;
 
 int main() {
 
-    Tree<int> tree;
+    AVLTree<int> tree;
 
     // =========================
     // PRUEBA DE INSERCIÓN

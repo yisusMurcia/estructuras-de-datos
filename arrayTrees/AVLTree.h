@@ -6,30 +6,77 @@
 
 template <class T>
 
-class Tree{
+class AVLTree{
     private:
     struct Node{
         T data;
-        int leftChild;
-        int rightChild;
-        Node(const T &value) : data(value), leftChild(0), rightChild(0){};
-        Node() : data(NULL), leftChild(0), rightChild(0){};
+        int height, leftChild, rightChild;
+        Node(const T &value) : data(value), height(0), leftChild(0), rightChild(0) {};
+        Node() : height(0), leftChild(0), rightChild(0) {};
     };
 
     Node** arr;
     int size;
     Node* head;
 
-    void leftRotation(int node){
-        
+    int max(int a, int b){
+        return a> b? a: b;
+    }
+
+    int height(int i){
+        return (i == 0) ? 0 : arr[i]->height;
+    }
+
+    void updateHeight(int i){
+        arr[i]->height = 1 + max(
+            height(arr[i]->leftChild),
+            height(arr[i]->rightChild)
+        );
+    }
+
+    void leftRotation(int node, int fatherNode){
+        int rightChild = arr[node]->rightChild;
+        int newRightChild = arr[rightChild]->leftChild;
+
+        if(arr[fatherNode]->leftChild == node) arr[fatherNode]->leftChild = rightChild;
+        else arr[fatherNode]->rightChild = rightChild;
+
+        arr[node]->rightChild = newRightChild;
+
+        arr[rightChild]->leftChild = node;
+
+        updateHeight(node);
+        updateHeight(rightChild);
+    }
+
+    void rightRotation(int node, int fatherNode){
+        int leftChild = arr[node]->leftChild;
+        int newLeftChild = arr[leftChild]->rightChild;
+
+        if(arr[fatherNode]->leftChild == node) arr[fatherNode]->leftChild = leftChild;
+        else arr[fatherNode]->rightChild = leftChild;
+
+        arr[node]->leftChild = newLeftChild;
+
+        arr[leftChild]->rightChild = node;
+
+        updateHeight(node);
+        updateHeight(leftChild);
+    }
+
+    int getBalanceFactor(Node* node){
+        return height(node->rightChild) - height(node->leftChild);
+    }
+    int getBalanceFactor(int i){
+        return getBalanceFactor(arr[i]);
     }
 
     public:
-    Tree(int size = 50){
-        this.size = size;
+    AVLTree(int length = 50){
+        size = length;
         arr = new Node*[size + 1];//0 is for control
         for(int i = 0; i < size; i++){
-            Node* node = new Node(NULL);
+            Node* node = new Node();
             node->rightChild = i+1;  
             arr[i] = node;          
         }
@@ -37,7 +84,7 @@ class Tree{
         arr[size +1] = new Node();
         arr[size +1]->rightChild = 0;
     }
-    ~Tree(){
+    ~AVLTree(){
         for(int i = 0; i<= size; i++){
             Node* node = arr[i];
             delete node;
@@ -45,10 +92,10 @@ class Tree{
     }
 
     void add(T value){
-        int indexFree = head->rightChild;
-        if(indexFree == 0)throw out_of_range("The tree is full");
+        int index = head->rightChild;
+        if(index == 0)throw out_of_range("The tree is full");
 
-        Node* newNode = arr[indexFree];
+        Node* newNode = arr[index];
         head->rightChild = newNode->rightChild;
         
         newNode->data = value;
@@ -56,66 +103,146 @@ class Tree{
         newNode-> rightChild = 0;
 
         if(!head->leftChild){//No hay raiz
-            head-> leftChild = indexFree;
+            head-> leftChild = index;
         }else{
             int current = head->leftChild;
-            int parent = 0;
-            
+            Stack<int> fatherStack;
+            int parent, balanceFactor;
+            bool balanced = false;
+
+            fatherStack.push(0);            
             while (current != 0) {
-                parent = current;
-                current = arr[value > arr[current]->data?arr[current]->rightChild:arr[current]->leftChild];
+                fatherStack.push(current);
+                current = (value > arr[current]->data)
+                    ? arr[current]->rightChild
+                    : arr[current]->leftChild;
+
             }
+
+            parent = fatherStack.pop();
+
             if (value > arr[parent]->data)
-                arr[parent]->rightChild = indexFree;
+                arr[parent]->rightChild = index;
             else
-                arr[parent]->leftChild = indexFree;
+                arr[parent]->leftChild = index;
+
+            while(!balanced && !fatherStack.isEmpty()){
+                index = parent;
+                parent = fatherStack.pop();
+                
+                balanced = true;
+                updateHeight(index);
+                balanceFactor = getBalanceFactor(arr[index]);
+
+                if(balanceFactor < -1){
+                    if(getBalanceFactor(arr[index]->leftChild) > 0) leftRotation(arr[index]->leftChild, index);
+                    rightRotation(index, parent);
+                }else if(balanceFactor > 1){
+                    if(getBalanceFactor(arr[index]->rightChild)< 0) rightRotation(arr[index]->rightChild, index);
+                    leftRotation(index, parent);
+                }else{
+                    balanced = false;
+                }
+            }
+            
         };
     };
 
     bool remove(T value){
         bool finded = false;
-        int index = 1;
-        int fatherIndex = 1;
+        int index = head->leftChild;
+        Stack<int> parentsStack;
+        parentsStack.push(0);
         do{
-            if(arr[index]->data == value){
+            if(arr[index]->data == value)
                 finded = true;
-            }else{
-                fatherIndex = index;
+            else{
+                parentsStack.push(index);
                 index = arr[index]->data < value? arr[index]->rightChild : arr[index] ->leftChild;
             }
             if(index == 0)return false;//Value not in tree
         }while (!finded);
 
         Node* toDelete = arr[index];
-        int childNodes = toDelete->rightChild + toDelete->leftChild;
+        int childNodes =(toDelete->leftChild != 0) + (toDelete->rightChild != 0);
         int childNode = index;
+        int fatherIndex = parentsStack.pop();
+        int balanceFactor;
 
         if(childNodes == 0){//Leaf
-            childNode = 0; //A leaf has no children
-        }else if(childNodes == 1){
-            childNode = toDelete->leftChild == 0? toDelete->leftChild: toDelete->rightChild;
-            toDelete ->leftChild = 0;
-            toDelete->rightChild = head->rightChild;
-            head->rightChild = index;
-            if(arr[fatherIndex]->leftChild == index)
-                arr[fatherIndex]->leftChild = childNode;
+            if(fatherIndex == 0)//Es la raíz
+                head->leftChild = 0;
             else
-                arr[fatherIndex]->rightChild = childNode;
-        }else{
-            int childIndex = toDelete->rightChild;
-            while(toDelete->leftChild == 0){
-                toDelete = arr[childIndex];
-                childIndex = toDelete->leftChild;
+                if(arr[fatherIndex]->leftChild == index)
+                    arr[fatherIndex]->leftChild = 0;
+                else
+                    arr[fatherIndex]->rightChild = 0;
+            
+        }else if(childNodes == 1){//One child
+            childNode = toDelete->leftChild == 0? toDelete->rightChild : toDelete->leftChild;
+            if(fatherIndex == 0){//Es la raíz
+                head->leftChild = childNode;
+            }else{
+                if(arr[fatherIndex]->leftChild == index)
+                    arr[fatherIndex]->leftChild = childNode;
+                else
+                    arr[fatherIndex]->rightChild = childNode;
             }
+        }else{//Two children
+            // Encontrar el sucesor (nodo más a la izquierda del subárbol derecho)
+            int successor = arr[index]->rightChild;
+            int successorFather = index;
+            
+            while(arr[successor]->leftChild != 0){
+                successorFather = successor;
+                successor = arr[successor]->leftChild;
+            }
+
+            // Desconectar el sucesor de su ubicación anterior
+            if(successorFather == index){
+                // El sucesor es el hijo derecho directo
+                arr[index]->rightChild = arr[successor]->rightChild;
+            }else{
+                // El sucesor está en el subárbol izquierdo del hijo derecho
+                arr[successorFather]->leftChild = arr[successor]->rightChild;
+            }
+
+            // Reemplazar el nodo a eliminar con el sucesor
+            arr[successor]->leftChild = arr[index]->leftChild;
+            arr[successor]->rightChild = arr[index]->rightChild;
+            
+            if(fatherIndex == 0){//Es la raíz
+                head->leftChild = successor;
+            }else{
+                if(arr[fatherIndex]->leftChild == index)
+                    arr[fatherIndex]->leftChild = successor;
+                else
+                    arr[fatherIndex]->rightChild = successor;
+            }
+
+            parentsStack.push(successorFather);
         }
-        //Update fatherNode and 
-        if(arr[fatherIndex]->leftChild == index)
-                arr[fatherIndex]->leftChild = childNode;
-            else
-                arr[fatherIndex]->rightChild = childNode;
-        toDelete -> leftChild = 0;
-        toDelete -> rightChild = head->rightChild;
+
+        arr[index]->rightChild = head->rightChild;
         head->rightChild = index;
+        
+        while(fatherIndex != 0 && !parentsStack.isEmpty()){
+            index = fatherIndex;
+            fatherIndex = parentsStack.pop();
+
+            updateHeight(index);
+            balanceFactor = getBalanceFactor(index);
+
+            if(balanceFactor < -1){
+                if(getBalanceFactor(arr[index]->leftChild) > 0) leftRotation(arr[index]->leftChild, index);
+                rightRotation(index, fatherIndex);
+            }else if(balanceFactor > 1){
+                if(getBalanceFactor(arr[index]->rightChild)< 0) rightRotation(arr[index]->rightChild, index);
+                leftRotation(index, fatherIndex);
+            }
+            
+        }
+
         return true;
     }
 
