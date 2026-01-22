@@ -1,11 +1,11 @@
 #include <iostream>
-#include "arrayTrees/AVLTree.h"
+#include "arrayTrees/blackRedTree.h"
 
 using namespace std;
 
 int main() {
 
-    AVLTree<int> tree;
+    RedBlackTree<int> tree;
 
     // =========================
     // PRUEBA DE INSERCIÓN

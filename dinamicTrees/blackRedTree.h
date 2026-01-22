@@ -114,8 +114,7 @@ class RedBlackTree{
                     uncle->isRed = false;
                     grandpa->isRed = true;
                     current = grandpa;
-                }
-                else {
+                }else {
                     // CASE 2 y 3: Tío es negro
                     if (parent == grandpa->leftChild) {
                         if (current == parent->rightChild) {
@@ -136,7 +135,6 @@ class RedBlackTree{
                         grandpa->isRed = true;
                         leftRotation(grandpa);
                     }
-                    break;
                 }
             }
         }
@@ -176,7 +174,7 @@ class RedBlackTree{
         Node* brother;
 
         if(!toDelete->isRed){
-            while(x != root && (x == nullptr || !x->isRed)){
+            while(x != root && (!x || !x->isRed)){
                 if(father->leftChild == x){
                     brother = father->rightChild;
 
