@@ -61,6 +61,18 @@ Create a list were the items are order (you can change the order in the add func
 - add(t) Insert an item in the given position
 - remove(t) Look for the item in the list, if it appears in the list it's deleted, return a boolean indicating the success of the operation
 
+# [Dequeue](deque.h)
+Also known as a double linked queue, this structures work as a queue but the values can be added in the front or in the back, so there are the methods.
+- pushFront(val)
+- pushBack(val)
+- front() : return the value in the front
+- bakc() : return the value in the back
+- popFront() : return the value and also remove it
+- popBack() : return the value and also remove it
+- clean() : Removes all the values
+- isEmpty()
+- getSize
+
 # Tree
 Binary trees implementations with the following methods
 
