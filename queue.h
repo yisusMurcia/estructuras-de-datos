@@ -46,15 +46,17 @@ class Queue {
             size++;
         }
 
-        void attend(){
-            if (isEmpty()) {
-                throw std::out_of_range("Queue empty");
-            }
+        t pop(){
+            if (isEmpty()) throw std::out_of_range("Queue empty");
+
             Node* toDelete = head->next;
+            t val = toDelete->data;
+
             head->next = toDelete->next;
             toDelete->next->before = head;
             delete toDelete;
             size--;
+            return val;
         }
 };
 #endif
