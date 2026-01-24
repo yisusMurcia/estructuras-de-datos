@@ -1,6 +1,5 @@
-# Data structures
-
-In this repo you´ll find some useful data structures, here are the structures and methods implemented:
+# Some advice
+Thia structures use a template class for save values and also make comparations, so if you're usisng a struct or an object make sure you overload the comparison operators.
 
 # [List](list.h)
 
@@ -80,7 +79,7 @@ Binary trees implementations with the following methods
 - remove(t): Look for the item in the tree, if it appears in,  it's deleted, return a boolean indicating the success of the operation.
 - getSize()
 
-Also these has their own methos for display/get the items in the next order:
+Also these has their own methos for display/get the items in the next order, for obvius reasons this methods are'nt applied to the heap:
 - Inorder
 - Posorder
 - Preorder
@@ -90,6 +89,7 @@ Here are the tree incuded in this library:
  - Binary tree: The classic one, use it when you have all the data in order.
  - AVL tree: Perfect for the most efficient searches but the adding and remove methods has a more complex process balancing the tree, so make sure you priorize search over tree modifications when you implement this tree.
  - Red black tree: Optimizated in cases where the tree add and removes nodes frecuently, this kind of tree balance the tree less often than the AVL implementation without affect the searc complexity, it's the perfect balance between add/remove and search.
+- Heap: This is also a binary tree but his functions si very different to the others, it allows to create a priority Queue, each root-to-leaf path is in descending order.
 
 ## [Dinamic implementations](dinamicTrees)
 This implemententions simulate a real binary tree with the correspondient atributtes, use these implementations for simulate in principal memory a tree and his values
@@ -106,8 +106,6 @@ Simple, the arr[0] indicates where is it, the leftChild indicates the root posit
 ### Free nodes
 
 The free nodes work as a queue, each free node has as a right child onether free node, every one instead of the last free node, his right child is the control position (arr[0])
-
-
 
 # [Sorting algorithms](SortingAlgorithms.h)
 In this library you can find some of the most efficients sorting algorithms, these algorithms take an array (or any other data struct if the  operator [] is defined) and modify this structure, don´t return a new one.

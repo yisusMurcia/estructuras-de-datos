@@ -33,6 +33,10 @@ class Heap{
         numOfNodes++;
     }
 
+    bool isEmpty(){
+        return numOfNodes == 0;
+    }
+
     T pop(){
         if(numOfNodes == 0)
             throw "Heap is empty";
